@@ -7,7 +7,7 @@ import { Thermometer, Droplets, Wind, CloudRain, Sun, Sprout } from "lucide-reac
 export const Route = createFileRoute("/weather")({
   head: () => ({
     meta: [
-      { title: "Weather — Verdant" },
+      { title: "Weather — KrushiMitra" },
       { name: "description", content: "7-day forecast and farming suggestions tuned for your field." },
     ],
   }),

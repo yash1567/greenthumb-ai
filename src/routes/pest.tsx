@@ -7,7 +7,7 @@ import { Upload, Image as ImageIcon, Sparkles, X, Leaf } from "lucide-react";
 export const Route = createFileRoute("/pest")({
   head: () => ({
     meta: [
-      { title: "Pest Detection — Verdant" },
+      { title: "Pest Detection — KrushiMitra" },
       { name: "description", content: "Upload a leaf photo and get an AI diagnosis with treatment in seconds." },
     ],
   }),

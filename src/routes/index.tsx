@@ -6,9 +6,9 @@ import heroImg from "@/assets/hero-farm.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Verdant — AI Smart Farming for Modern Growers" },
+      { title: "KrushiMitra — AI Smart Farming for Modern Growers" },
       { name: "description", content: "Soil analysis, crop recommendations, pest detection and weather — one calm dashboard for your farm." },
-      { property: "og:title", content: "Verdant — AI Smart Farming for Modern Growers" },
+      { property: "og:title", content: "KrushiMitra — AI Smart Farming for Modern Growers" },
       { property: "og:description", content: "Soil analysis, crop recommendations, pest detection and weather — one calm dashboard for your farm." },
     ],
   }),
@@ -32,7 +32,7 @@ function Landing() {
             <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-lime text-lime-foreground shadow-glow">
               <Leaf className="h-5 w-5" strokeWidth={2.5} />
             </div>
-            <span className="font-display text-2xl font-semibold">Verdant</span>
+            <span className="font-display text-2xl font-semibold">KrushiMitra</span>
           </div>
           <nav className="hidden items-center gap-8 text-sm font-medium text-primary-foreground/80 md:flex">
             <a href="#features" className="hover:text-primary-foreground">Features</a>
@@ -74,7 +74,7 @@ function Landing() {
               <span className="italic text-lime">season after season.</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-primary-foreground/85">
-              Verdant turns soil readings, weather and a single leaf photo into clear next steps —
+              KrushiMitra turns soil readings, weather and a single leaf photo into clear next steps —
               so your fields produce more with less guesswork.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-4">
@@ -146,7 +146,7 @@ function Landing() {
           <div className="mt-14 grid gap-8 md:grid-cols-3">
             {[
               ["01", "Tell us your field", "Enter pH, NPK, moisture and season — or import past readings."],
-              ["02", "Verdant analyzes", "Our models cross-reference soil, climate and crop history."],
+              ["02", "KrushiMitra analyzes", "Our models cross-reference soil, climate and crop history."],
               ["03", "Act with confidence", "Get the best crops, fertilizer plan and pest alerts instantly."],
             ].map(([n, t, d]) => (
               <div key={n} className="rounded-3xl border border-primary-foreground/15 bg-primary-foreground/5 p-8 backdrop-blur">
@@ -168,7 +168,7 @@ function Landing() {
               Plain language. Big buttons. Real results.
             </h2>
             <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
-              No jargon, no clutter. Verdant is designed for the field — readable in sunlight and
+              No jargon, no clutter. KrushiMitra is designed for the field — readable in sunlight and
               fast on any phone.
             </p>
             <ul className="mt-8 space-y-4">
@@ -215,7 +215,7 @@ function Landing() {
       <footer className="border-t border-border bg-card">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-8 sm:flex-row">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Leaf className="h-4 w-4 text-leaf" /> © 2025 Verdant Agritech
+            <Leaf className="h-4 w-4 text-leaf" /> © 2025 KrushiMitra Agritech
           </div>
           <p className="text-xs text-muted-foreground">Cultivating better seasons with AI.</p>
         </div>

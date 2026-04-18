@@ -7,7 +7,7 @@ import { Sprout, FlaskConical, ArrowRight } from "lucide-react";
 export const Route = createFileRoute("/soil")({
   head: () => ({
     meta: [
-      { title: "Soil Analyzer — Verdant" },
+      { title: "Soil Analyzer — KrushiMitra" },
       { name: "description", content: "Enter your soil readings and get instant quality, crop and fertilizer advice." },
     ],
   }),
