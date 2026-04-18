@@ -170,14 +170,24 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 <Bell className="h-5 w-5" />
                 <span className="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-bad" />
               </button>
-              <div className="flex items-center gap-3 rounded-full border border-border bg-card py-1.5 pl-1.5 pr-4 shadow-soft">
+              <div className="flex items-center gap-3 rounded-full border border-border bg-card py-1.5 pl-1.5 pr-3 shadow-soft">
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-leaf text-sm font-semibold text-primary-foreground">
-                  RK
+                  {initials}
                 </div>
                 <div className="hidden text-left sm:block">
-                  <p className="text-sm font-semibold leading-tight text-foreground">Ravi Kumar</p>
-                  <p className="text-xs leading-tight text-muted-foreground">Nashik farm</p>
+                  <p className="text-sm font-semibold leading-tight text-foreground">{displayName}</p>
+                  <p className="text-xs leading-tight text-muted-foreground">
+                    {profile?.farm_location?.trim() || user.email}
+                  </p>
                 </div>
+                <button
+                  onClick={handleSignOut}
+                  className="ml-1 flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition hover:bg-accent hover:text-foreground"
+                  aria-label="Sign out"
+                  title="Sign out"
+                >
+                  <LogOut className="h-4 w-4" />
+                </button>
               </div>
             </div>
           </div>
