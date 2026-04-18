@@ -1,5 +1,5 @@
-import { Link, useLocation } from "@tanstack/react-router";
-import { useState } from "react";
+import { Link, useLocation, useNavigate } from "@tanstack/react-router";
+import { useEffect, useMemo, useState } from "react";
 import {
   LayoutDashboard,
   Sprout,
@@ -12,7 +12,11 @@ import {
   Search,
   Menu,
   X,
+  LogOut,
 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const nav = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -25,8 +29,56 @@ const nav = [
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const { user, loading, signOut } = useAuth();
   const [open, setOpen] = useState(false);
+  const [profile, setProfile] = useState<{ full_name: string | null; farm_location: string | null } | null>(null);
+
   const current = nav.find((n) => pathname.startsWith(n.to))?.label ?? "Dashboard";
+
+  // Auth gate
+  useEffect(() => {
+    if (!loading && !user) navigate({ to: "/auth" });
+  }, [loading, user, navigate]);
+
+  // Load profile
+  useEffect(() => {
+    if (!user) return;
+    supabase
+      .from("profiles")
+      .select("full_name, farm_location")
+      .eq("user_id", user.id)
+      .maybeSingle()
+      .then(({ data }) => setProfile(data));
+  }, [user]);
+
+  const displayName = useMemo(() => {
+    return profile?.full_name?.trim() || user?.email?.split("@")[0] || "Farmer";
+  }, [profile, user]);
+
+  const initials = useMemo(() => {
+    const parts = displayName.split(" ").filter(Boolean);
+    return ((parts[0]?.[0] ?? "") + (parts[1]?.[0] ?? "")).toUpperCase() || "F";
+  }, [displayName]);
+
+  async function handleSignOut() {
+    await signOut();
+    toast.success("Signed out");
+    navigate({ to: "/auth" });
+  }
+
+  if (loading || !user) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gradient-soft">
+        <div className="flex flex-col items-center gap-4 text-muted-foreground">
+          <div className="flex h-12 w-12 animate-pulse items-center justify-center rounded-2xl bg-lime text-lime-foreground shadow-glow">
+            <Leaf className="h-6 w-6" />
+          </div>
+          <p className="text-sm">Loading KrushiMitra…</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-soft">
@@ -118,14 +170,24 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 <Bell className="h-5 w-5" />
                 <span className="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-bad" />
               </button>
-              <div className="flex items-center gap-3 rounded-full border border-border bg-card py-1.5 pl-1.5 pr-4 shadow-soft">
+              <div className="flex items-center gap-3 rounded-full border border-border bg-card py-1.5 pl-1.5 pr-3 shadow-soft">
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-leaf text-sm font-semibold text-primary-foreground">
-                  RK
+                  {initials}
                 </div>
                 <div className="hidden text-left sm:block">
-                  <p className="text-sm font-semibold leading-tight text-foreground">Ravi Kumar</p>
-                  <p className="text-xs leading-tight text-muted-foreground">Nashik farm</p>
+                  <p className="text-sm font-semibold leading-tight text-foreground">{displayName}</p>
+                  <p className="text-xs leading-tight text-muted-foreground">
+                    {profile?.farm_location?.trim() || user.email}
+                  </p>
                 </div>
+                <button
+                  onClick={handleSignOut}
+                  className="ml-1 flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition hover:bg-accent hover:text-foreground"
+                  aria-label="Sign out"
+                  title="Sign out"
+                >
+                  <LogOut className="h-4 w-4" />
+                </button>
               </div>
             </div>
           </div>
