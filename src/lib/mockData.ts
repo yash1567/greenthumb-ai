@@ -13,6 +13,8 @@ export type SoilReading = {
   topCrop: string;
 };
 
+export type CropCategory = "Food" | "Cash" | "Pulses" | "Vegetables" | "Oil";
+
 export type CropRec = {
   name: string;
   emoji: string;
@@ -21,6 +23,8 @@ export type CropRec = {
   yield: string;
   water: "Low" | "Medium" | "High";
   notes: string;
+  category: CropCategory;
+  season: "Kharif" | "Rabi" | "Zaid" | "All Season";
 };
 
 export type PestRecord = {
@@ -40,9 +44,36 @@ export const soilHistory: SoilReading[] = [
 ];
 
 export const topCrops: CropRec[] = [
-  { name: "Rice (Basmati)", emoji: "🌾", confidence: 94, sowing: "Jun – Jul", yield: "5.2 t/ha", water: "High", notes: "Ideal pH and moisture levels detected." },
-  { name: "Maize", emoji: "🌽", confidence: 87, sowing: "Jun – Aug", yield: "4.1 t/ha", water: "Medium", notes: "Good NPK balance for vegetative growth." },
-  { name: "Soybean", emoji: "🫘", confidence: 79, sowing: "Jul – Aug", yield: "2.4 t/ha", water: "Medium", notes: "Will improve nitrogen for next season." },
+  // Food crops
+  { name: "Rice (Basmati)", emoji: "🌾", confidence: 94, sowing: "Jun – Jul", yield: "5.2 t/ha", water: "High", notes: "Ideal pH and moisture levels detected. Strong monsoon outlook supports paddy.", category: "Food", season: "Kharif" },
+  { name: "Wheat (HD-2967)", emoji: "🌾", confidence: 88, sowing: "Oct – Dec", yield: "4.8 t/ha", water: "Medium", notes: "Suitable winter temperatures and loamy texture detected.", category: "Food", season: "Rabi" },
+  { name: "Maize", emoji: "🌽", confidence: 87, sowing: "Jun – Aug", yield: "4.1 t/ha", water: "Medium", notes: "Good NPK balance for vegetative growth.", category: "Food", season: "Kharif" },
+  { name: "Pearl Millet (Bajra)", emoji: "🌾", confidence: 82, sowing: "Jun – Jul", yield: "2.6 t/ha", water: "Low", notes: "Drought tolerant — fits semi-arid soil profile.", category: "Food", season: "Kharif" },
+  { name: "Finger Millet (Ragi)", emoji: "🌾", confidence: 76, sowing: "Jun – Aug", yield: "2.2 t/ha", water: "Low", notes: "High nutritional value, low input requirement.", category: "Food", season: "Kharif" },
+  { name: "Sorghum (Jowar)", emoji: "🌾", confidence: 74, sowing: "Jun – Jul", yield: "2.8 t/ha", water: "Low", notes: "Tolerates heat and erratic rainfall.", category: "Food", season: "Kharif" },
+
+  // Cash crops
+  { name: "Cotton (Bt)", emoji: "🌿", confidence: 81, sowing: "Apr – May", yield: "1.8 t/ha", water: "Medium", notes: "Black soil suitability with controlled irrigation.", category: "Cash", season: "Kharif" },
+  { name: "Sugarcane", emoji: "🎋", confidence: 78, sowing: "Feb – Mar", yield: "70 t/ha", water: "High", notes: "Long duration crop — needs assured irrigation.", category: "Cash", season: "All Season" },
+  { name: "Jute", emoji: "🌱", confidence: 68, sowing: "Mar – May", yield: "2.5 t/ha", water: "High", notes: "Best in alluvial soil with high humidity.", category: "Cash", season: "Kharif" },
+
+  // Pulses
+  { name: "Chickpea (Gram)", emoji: "🫛", confidence: 84, sowing: "Oct – Nov", yield: "1.6 t/ha", water: "Low", notes: "Fixes nitrogen — excellent for soil health.", category: "Pulses", season: "Rabi" },
+  { name: "Pigeon Pea (Tur)", emoji: "🫘", confidence: 80, sowing: "Jun – Jul", yield: "1.4 t/ha", water: "Low", notes: "Deep-rooted, drought tolerant pulse.", category: "Pulses", season: "Kharif" },
+  { name: "Green Gram (Moong)", emoji: "🫛", confidence: 77, sowing: "Mar – Jul", yield: "1.1 t/ha", water: "Low", notes: "Short duration — fits crop rotation.", category: "Pulses", season: "Zaid" },
+  { name: "Black Gram (Urad)", emoji: "🫘", confidence: 73, sowing: "Jun – Aug", yield: "1.0 t/ha", water: "Low", notes: "Improves soil fertility through N-fixation.", category: "Pulses", season: "Kharif" },
+
+  // Vegetables
+  { name: "Potato", emoji: "🥔", confidence: 83, sowing: "Oct – Nov", yield: "22 t/ha", water: "Medium", notes: "Cool weather and well-drained soil suit it well.", category: "Vegetables", season: "Rabi" },
+  { name: "Tomato", emoji: "🍅", confidence: 79, sowing: "Jun – Jul", yield: "28 t/ha", water: "Medium", notes: "Good drainage and balanced NPK detected.", category: "Vegetables", season: "All Season" },
+  { name: "Onion", emoji: "🧅", confidence: 75, sowing: "Oct – Dec", yield: "20 t/ha", water: "Medium", notes: "Suits Rabi cycle with moderate irrigation.", category: "Vegetables", season: "Rabi" },
+  { name: "Brinjal", emoji: "🍆", confidence: 71, sowing: "Jun – Sep", yield: "25 t/ha", water: "Medium", notes: "Hardy crop with steady market demand.", category: "Vegetables", season: "All Season" },
+
+  // Oil crops
+  { name: "Mustard", emoji: "🌼", confidence: 82, sowing: "Oct – Nov", yield: "1.5 t/ha", water: "Low", notes: "Cool dry winter favours oilseed yield.", category: "Oil", season: "Rabi" },
+  { name: "Groundnut", emoji: "🥜", confidence: 80, sowing: "Jun – Jul", yield: "2.2 t/ha", water: "Medium", notes: "Sandy loam and warm climate ideal.", category: "Oil", season: "Kharif" },
+  { name: "Soybean", emoji: "🫘", confidence: 79, sowing: "Jul – Aug", yield: "2.4 t/ha", water: "Medium", notes: "Will improve nitrogen for next season.", category: "Oil", season: "Kharif" },
+  { name: "Sunflower", emoji: "🌻", confidence: 72, sowing: "Jan – Feb", yield: "1.8 t/ha", water: "Medium", notes: "Photo-insensitive — flexible sowing window.", category: "Oil", season: "Zaid" },
 ];
 
 export const pestHistory: PestRecord[] = [
