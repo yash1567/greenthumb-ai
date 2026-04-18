@@ -7,7 +7,7 @@ import { Sparkles, Calendar, Droplet, TrendingUp } from "lucide-react";
 export const Route = createFileRoute("/crops")({
   head: () => ({
     meta: [
-      { title: "Crop Recommendations — Verdant" },
+      { title: "Crop Recommendations — KrushiMitra" },
       { name: "description", content: "Top 3 crops for your field with confidence scores, sowing windows and yield." },
     ],
   }),

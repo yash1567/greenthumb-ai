@@ -41,7 +41,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <Leaf className="h-5 w-5" strokeWidth={2.5} />
           </div>
           <div>
-            <p className="font-display text-xl font-semibold leading-none">Verdant</p>
+            <p className="font-display text-xl font-semibold leading-none">KrushiMitra</p>
             <p className="mt-1 text-[11px] uppercase tracking-[0.2em] text-sidebar-foreground/60">
               Smart Farming
             </p>

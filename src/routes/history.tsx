@@ -7,7 +7,7 @@ import { soilHistory, pestHistory, topCrops } from "@/lib/mockData";
 export const Route = createFileRoute("/history")({
   head: () => ({
     meta: [
-      { title: "History — Verdant" },
+      { title: "History — KrushiMitra" },
       { name: "description", content: "Past soil tests, crop recommendations and pest detections in one place." },
     ],
   }),

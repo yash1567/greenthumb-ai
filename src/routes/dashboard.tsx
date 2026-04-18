@@ -9,7 +9,7 @@ import {
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
     meta: [
-      { title: "Dashboard — Verdant" },
+      { title: "Dashboard — KrushiMitra" },
       { name: "description", content: "Your farm at a glance: weather, soil, crop and alerts." },
     ],
   }),

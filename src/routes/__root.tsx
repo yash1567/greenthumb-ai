@@ -29,10 +29,10 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Verdant — Smart Farming, Simplified" },
+      { title: "KrushiMitra — Smart Farming, Simplified" },
       { name: "description", content: "AI-powered soil analysis, crop recommendations, pest detection and weather insights for modern farmers." },
-      { name: "author", content: "Verdant" },
-      { property: "og:title", content: "Verdant — Smart Farming, Simplified" },
+      { name: "author", content: "KrushiMitra" },
+      { property: "og:title", content: "KrushiMitra — Smart Farming, Simplified" },
       { property: "og:description", content: "AI-powered soil analysis, crop recommendations, pest detection and weather insights for modern farmers." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
