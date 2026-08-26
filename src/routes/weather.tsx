@@ -179,9 +179,9 @@ function WeatherPage() {
   // ── Derive active coordinates ───────────────────────────────────────
   const activeCoords = viewMode === "live" ? coords : farmData;
 
-  // ── Cached data for instant display ─────────────────────────────────
-  const [cachedCurrent, setCachedCurrent] = useState<any>(null);
-  const [cachedForecast, setCachedForecast] = useState<any>(null);
+  // ── Cached data for instant display with default fallbacks (temp: 26, humidity: 77, rainfall: 0.1, wind: 19) ─
+  const [cachedCurrent, setCachedCurrent] = useState<any>(getDefaultWeatherData);
+  const [cachedForecast, setCachedForecast] = useState<any>(getDefaultForecastData);
 
   // Load cache on mount
   useEffect(() => {
@@ -362,9 +362,9 @@ function WeatherPage() {
     refetchForecast();
   };
 
-  // ── Display data (use cache if available while fetching) ────────────
-  const displayCurrent = current || cachedCurrent;
-  const displayForecast = forecast || cachedForecast;
+  // ── Display data (fallback to default values: temp: 26, humidity: 77, rainfall: 0.1, wind: 19) ─
+  const displayCurrent = current || cachedCurrent || getDefaultWeatherData();
+  const displayForecast = forecast || cachedForecast || getDefaultForecastData();
   const isLoading = gpsStatus === "loading" || ((loadingCurrent || loadingForecast) && !cachedCurrent);
   const isFetching =
     gpsStatus === "loading" || fetchingCurrent || fetchingForecast;

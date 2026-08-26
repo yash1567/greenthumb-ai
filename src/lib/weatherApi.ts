@@ -19,12 +19,12 @@ function weatherCodeToCondition(code: number): { condition: string; description:
 
 export function getDefaultWeatherData() {
   return {
-    temperature: 28,
-    feels_like: 29,
-    humidity: 60,
-    wind_speed: 3.5,
-    rainfall_1h: 0,
-    rainfall_today: 0,
+    temperature: 26,
+    feels_like: 27,
+    humidity: 77,
+    wind_speed: 5.28, // 19 km/h
+    rainfall_1h: 0.1,
+    rainfall_today: 0.1,
     condition: "Clear",
     description: "Clear sky",
     location: "Pune, Maharashtra",
@@ -34,7 +34,7 @@ export function getDefaultWeatherData() {
 
 export function getDefaultForecastData() {
   return {
-    total_rainfall_next_24h: 0,
+    total_rainfall_next_24h: 0.1,
     farming_suggestion: "Clear conditions expected for farm operations.",
     daily: [],
   };
@@ -45,12 +45,12 @@ function normalizeCurrentWeather(data: any, lat: number, lon: number) {
     return getDefaultWeatherData();
   }
 
-  const temp = safeNumber(data.temperature, 28);
+  const temp = safeNumber(data.temperature, 26);
   const feels = safeNumber(data.feels_like ?? data.temperature, temp);
-  const hum = safeNumber(data.humidity, 60);
-  const wind = safeNumber(data.wind_speed, 3.5);
-  const rain1h = safeNumber(data.rainfall_1h, 0);
-  const rainToday = safeNumber(data.rainfall_today, 0);
+  const hum = safeNumber(data.humidity, 77);
+  const wind = safeNumber(data.wind_speed, 5.28);
+  const rain1h = safeNumber(data.rainfall_1h, 0.1);
+  const rainToday = safeNumber(data.rainfall_today, 0.1);
 
   return {
     temperature: temp,
@@ -72,21 +72,21 @@ function normalizeOpenMeteoCurrent(data: any, lat: number, lon: number) {
   }
 
   const cw = data.current_weather || {};
-  const temp = safeNumber(cw.temperature, 28);
-  const windKmh = safeNumber(cw.windspeed, 12.6);
-  const windMs = Number((windKmh / 3.6).toFixed(1));
+  const temp = safeNumber(cw.temperature, 26);
+  const windKmh = safeNumber(cw.windspeed, 19);
+  const windMs = Number((windKmh / 3.6).toFixed(2));
   const humidityArr = data.hourly?.relative_humidity_2m;
-  const hum = Array.isArray(humidityArr) && humidityArr.length > 0 ? safeNumber(humidityArr[0], 60) : 60;
+  const hum = Array.isArray(humidityArr) && humidityArr.length > 0 ? safeNumber(humidityArr[0], 77) : 77;
   const code = safeNumber(cw.weathercode, 0);
   const { condition, description } = weatherCodeToCondition(code);
-  const rainToday = safeNumber(data.daily?.precipitation_sum?.[0], 0);
+  const rainToday = safeNumber(data.daily?.precipitation_sum?.[0], 0.1);
 
   return {
     temperature: temp,
     feels_like: temp,
     humidity: hum,
-    wind_speed: isNaN(windMs) ? 3.5 : windMs,
-    rainfall_1h: 0,
+    wind_speed: isNaN(windMs) ? 5.28 : windMs,
+    rainfall_1h: 0.1,
     rainfall_today: rainToday,
     condition,
     description,
