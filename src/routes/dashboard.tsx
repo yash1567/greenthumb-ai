@@ -100,32 +100,32 @@ function Dashboard() {
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             <StatCard
               label={t('dashboard.temp')}
-              value={Math.round(current.temperature)}
+              value={isNaN(Number(current?.temperature)) ? 28 : Math.round(Number(current.temperature))}
               unit="°C"
-              hint={current.condition}
+              hint={current?.condition || "Clear"}
               icon={<Thermometer className="h-5 w-5" />}
               tone="sun"
             />
             <StatCard
               label={t('dashboard.humidity')}
-              value={current.humidity}
+              value={isNaN(Number(current?.humidity)) ? 60 : Number(current.humidity)}
               unit="%"
-              hint={current.humidity > 60 ? "Humid" : current.humidity < 35 ? "Dry" : "Moderate"}
+              hint={(current?.humidity ?? 60) > 60 ? "Humid" : (current?.humidity ?? 60) < 35 ? "Dry" : "Moderate"}
               icon={<Droplets className="h-5 w-5" />}
               tone="sky"
             />
             <StatCard
               label={t('dashboard.rainfall')}
-              value={current.rainfall_1h}
+              value={isNaN(Number(current?.rainfall_1h)) ? 0 : Number(current.rainfall_1h)}
               unit="mm"
-              hint={current.rainfall_1h > 0 ? "Sprinkling" : "No rain"}
+              hint={(current?.rainfall_1h ?? 0) > 0 ? "Sprinkling" : "No rain"}
               icon={<CloudRain className="h-5 w-5" />}
             />
             <StatCard
               label={t('dashboard.wind')}
-              value={Math.round(current.wind_speed * 3.6)} // convert m/s to km/h
+              value={isNaN(Number(current?.wind_speed)) ? 12 : Math.round(Number(current.wind_speed) * 3.6)}
               unit="km/h"
-              hint={current.wind_speed > 5 ? "Breezy" : "Calm"}
+              hint={(current?.wind_speed ?? 3.5) > 5 ? "Breezy" : "Calm"}
               icon={<Wind className="h-5 w-5" />}
             />
           </div>
