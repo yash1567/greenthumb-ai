@@ -1,0 +1,52 @@
+{
+  "landing": {
+    "title": "KrushiMitra"
+  },
+  "appshell": {
+    "smartFarming": "Smart Farming AI",
+    "proTips": "Farming Tip of the Day",
+    "tipText": "Soil testing every 6 months increases fertilizer efficiency by up to 30%."
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "soilAnalyzer": "Soil Health",
+    "cropRecommendation": "Crop Advisor",
+    "pestDetection": "Pest & Disease",
+    "weather": "Weather",
+    "history": "History & Reports"
+  },
+  "dashboard": {
+    "goodMorning": "Welcome Back",
+    "heroTitle": "Smart Farming, Simplified",
+    "heroDesc": "Monitor crop health, analyze soil nutrients, and view live weather insights for your farm.",
+    "analyzeNewSample": "Analyze Soil",
+    "temp": "Temperature",
+    "humidity": "Humidity",
+    "rainfall": "Rainfall",
+    "wind": "Wind Speed",
+    "recentActivity": "Recent Farm Activity",
+    "viewAll": "View All",
+    "recommendedCrops": "Recommended Crops",
+    "alerts": "Active Alerts"
+  },
+  "soil": {
+    "title": "Soil Health Analyzer",
+    "desc": "Input N-P-K soil parameters for instant crop suitability analysis."
+  },
+  "crops": {
+    "title": "Crop Recommendation Engine",
+    "desc": "AI-powered crop selection based on season, soil, and market demand."
+  },
+  "pest": {
+    "title": "Pest & Disease Detection",
+    "desc": "Identify crop diseases early using leaf scan image analysis."
+  },
+  "weather": {
+    "title": "Weather & Advisory",
+    "desc": "Hyper-local weather forecasts and crop protection advisories."
+  },
+  "history": {
+    "title": "Farm History & Logs",
+    "desc": "Track past soil tests, crop recommendations, and pest scans."
+  }
+}

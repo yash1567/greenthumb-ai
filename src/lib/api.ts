@@ -1,11 +1,10 @@
 // Centralized API client utility for KrushiMitra frontend
 
-export const API_BASE_URL = (
-  import.meta.env.VITE_API_BASE_URL || "https://greenthumb-ai-1.onrender.com"
-).replace(/\/+$/, "");
+const rawUrl = import.meta.env.VITE_API_BASE_URL || "https://greenthumb-ai-1.onrender.com";
+export const API_BASE_URL = String(rawUrl).replace(/[\)\s]/g, "").replace(/\/+$/, "");
 
 /**
- * Construct a clean endpoint URL without broken double slashes.
+ * Construct a clean endpoint URL without broken double slashes or syntax artifacts.
  * @param path Endpoint path, e.g. "/api/health" or "health"
  */
 export function getApiUrl(path: string): string {
