@@ -55,13 +55,20 @@ function DefaultErrorComponent({ error, reset }: { error: Error; reset: () => vo
 }
 
 export const getRouter = () => {
-  const router = createRouter({
-    routeTree,
-    context: {},
-    scrollRestoration: true,
-    defaultPreloadStaleTime: 0,
-    defaultErrorComponent: DefaultErrorComponent,
-  });
+  try {
+    const router = createRouter({
+      routeTree,
+      context: {},
+      scrollRestoration: true,
+      defaultPreloadStaleTime: 0,
+      defaultErrorComponent: DefaultErrorComponent,
+    });
 
-  return router;
+    return router;
+  } catch (error) {
+    console.error("[router] Failed to create router:", error);
+    // Re-throw so the entry-server.tsx fetch handler can catch it
+    // and return a graceful HTML error page.
+    throw error;
+  }
 };

@@ -1,16 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { AppShell } from "@/components/AppShell";
 import { SectionCard, StatusBadge } from "@/components/UI";
 import { Upload, Image as ImageIcon, Sparkles, X, Leaf } from "lucide-react";
 
 export const Route = createFileRoute("/pest")({
-  head: () => ({
-    meta: [
-      { title: "Pest Detection — KrushiMitra" },
-      { name: "description", content: "Upload a leaf photo and get an AI diagnosis with treatment in seconds." },
-    ],
-  }),
   component: PestPage,
 });
 
@@ -31,10 +26,10 @@ const mockDetections: Detection[] = [
     severity: "Moderate",
     status: "warn",
     treatments: [
-      "Remove and destroy infected lower leaves",
-      "Apply copper-based fungicide every 7–10 days",
-      "Mulch around base to prevent soil splash",
-      "Improve airflow by spacing plants 60 cm apart",
+      "removeInfected",
+      "copperFungicide",
+      "mulchBase",
+      "improveAirflow",
     ],
   },
   {
@@ -44,9 +39,9 @@ const mockDetections: Detection[] = [
     severity: "Low",
     status: "good",
     treatments: [
-      "Monitor field weekly — currently low risk",
-      "Ensure balanced potassium for natural resistance",
-      "Plan rust-resistant variety for next sowing",
+      "monitorWeekly",
+      "balancedPotassium",
+      "planResistant",
     ],
   },
   {
@@ -56,15 +51,16 @@ const mockDetections: Detection[] = [
     severity: "High",
     status: "bad",
     treatments: [
-      "Drain field for 2–3 days to slow spread",
-      "Apply copper oxychloride spray immediately",
-      "Stop nitrogen top-dressing until controlled",
-      "Burn severely infected plants away from field",
+      "drainField",
+      "copperOxychloride",
+      "stopNitrogen",
+      "burnSeverely",
     ],
   },
 ];
 
 function PestPage() {
+  const { t } = useTranslation();
   const [preview, setPreview] = useState<string | null>(null);
   const [drag, setDrag] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
@@ -88,7 +84,7 @@ function PestPage() {
   return (
     <AppShell>
       <div className="grid gap-6 lg:grid-cols-5">
-        <SectionCard title="Upload a leaf photo" subtitle="Drag & drop or browse — JPG/PNG up to 10MB" className="lg:col-span-3">
+        <SectionCard title={t("pest.uploadTitle")} subtitle={t("pest.uploadSubtitle")} className="lg:col-span-3">
           {!preview ? (
             <label
               onDragOver={(e) => { e.preventDefault(); setDrag(true); }}
@@ -103,10 +99,10 @@ function PestPage() {
               <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-leaf text-primary-foreground shadow-glow">
                 <Upload className="h-7 w-7" />
               </div>
-              <p className="mt-5 font-display text-xl font-semibold">Drop your leaf image here</p>
-              <p className="mt-1 text-sm text-muted-foreground">or click to browse from your device</p>
+              <p className="mt-5 font-display text-xl font-semibold">{t("pest.dropImage")}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{t("pest.orBrowse")}</p>
               <span className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground">
-                <ImageIcon className="h-4 w-4" /> Choose photo
+                <ImageIcon className="h-4 w-4" /> {t("pest.choosePhoto")}
               </span>
             </label>
           ) : (
@@ -124,7 +120,7 @@ function PestPage() {
                   <div className="rounded-2xl bg-card px-6 py-4 shadow-card">
                     <div className="flex items-center gap-3">
                       <Sparkles className="h-5 w-5 animate-pulse text-leaf" />
-                      <p className="font-semibold">Analyzing leaf…</p>
+                      <p className="font-semibold">{t("pest.analyzing")}</p>
                     </div>
                   </div>
                 </div>
@@ -135,22 +131,22 @@ function PestPage() {
 
         <div className="lg:col-span-2 space-y-6">
           <SectionCard
-            title="Diagnosis"
-            subtitle="AI-powered detection result"
-            action={result && <StatusBadge status={result.status}>{result.severity} severity</StatusBadge>}
+            title={t("pest.diagnosisTitle")}
+            subtitle={t("pest.diagnosisSubtitle")}
+            action={result && <StatusBadge status={result.status}>{result.severity === "Low" ? t("pest.severityLow") : result.severity === "Moderate" ? t("pest.severityModerate") : t("pest.severityHigh")}</StatusBadge>}
           >
             {!result ? (
               <div className="flex flex-col items-center justify-center py-10 text-center text-muted-foreground">
                 <Leaf className="h-10 w-10 text-leaf/40" />
-                <p className="mt-3 text-sm">Upload a photo to see results.</p>
+                <p className="mt-3 text-sm">{t("pest.emptyState")}</p>
               </div>
             ) : (
               <>
                 <div className="rounded-2xl bg-gradient-leaf p-6 text-primary-foreground">
-                  <p className="text-xs uppercase tracking-wider opacity-80">{result.crop}</p>
-                  <p className="mt-1 font-display text-3xl font-semibold">{result.disease}</p>
+                  <p className="text-xs uppercase tracking-wider opacity-80">{t(`cropNames.${result.crop}`, result.crop)}</p>
+                  <p className="mt-1 font-display text-3xl font-semibold">{t(`diseaseNames.${result.disease}`, result.disease)}</p>
                   <div className="mt-4 flex items-end justify-between">
-                    <span className="text-sm opacity-90">Confidence</span>
+                    <span className="text-sm opacity-90">{t("pest.confidence")}</span>
                     <span className="font-display text-3xl font-semibold text-lime">{result.confidence}%</span>
                   </div>
                   <div className="mt-2 h-2 overflow-hidden rounded-full bg-primary-foreground/15">
@@ -162,12 +158,12 @@ function PestPage() {
           </SectionCard>
 
           {result && (
-            <SectionCard title="Treatment plan" subtitle="Follow these steps in order">
+            <SectionCard title={t("pest.treatmentPlan")} subtitle={t("pest.followSteps")}>
               <ol className="space-y-2.5">
-                {result.treatments.map((t, i) => (
+                {result.treatments.map((tk, i) => (
                   <li key={i} className="flex gap-3 rounded-2xl bg-muted px-4 py-3 text-sm">
                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-leaf text-xs font-bold text-primary-foreground">{i + 1}</span>
-                    <span>{t}</span>
+                    <span>{t(`pest.treatments.${tk}`)}</span>
                   </li>
                 ))}
               </ol>

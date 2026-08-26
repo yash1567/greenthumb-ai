@@ -1,5 +1,8 @@
+import { useEffect, useState } from "react";
+import { getUser, logoutUser } from "../lib/auth";
 import { Link, useLocation } from "@tanstack/react-router";
-import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 import {
   LayoutDashboard,
   Sprout,
@@ -14,19 +17,23 @@ import {
   X,
 } from "lucide-react";
 
-const nav = [
-  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/soil", label: "Soil Analyzer", icon: Sprout },
-  { to: "/crops", label: "Crop Recommendation", icon: Wheat },
-  { to: "/pest", label: "Pest Detection", icon: Bug },
-  { to: "/weather", label: "Weather", icon: CloudSun },
-  { to: "/history", label: "History", icon: History },
+const navItems = [
+  { to: "/dashboard", labelKey: "nav.dashboard", icon: LayoutDashboard },
+  { to: "/soil", labelKey: "nav.soilAnalyzer", icon: Sprout },
+  { to: "/crops", labelKey: "nav.cropRecommendation", icon: Wheat },
+  { to: "/pest", labelKey: "nav.pestDetection", icon: Bug },
+  { to: "/weather", labelKey: "nav.weather", icon: CloudSun },
+  { to: "/history", labelKey: "nav.history", icon: History },
 ] as const;
 
 export function AppShell({ children }: { children: React.ReactNode }) {
+  const { t } = useTranslation();
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
-  const current = nav.find((n) => pathname.startsWith(n.to))?.label ?? "Dashboard";
+  const [user, setUser] = useState(() => getUser());
+  
+  const currentItem = navItems.find((n) => pathname.startsWith(n.to));
+  const current = currentItem ? t(currentItem.labelKey) : t("nav.dashboard");
 
   return (
     <div className="min-h-screen bg-gradient-soft">
@@ -41,16 +48,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <Leaf className="h-5 w-5" strokeWidth={2.5} />
           </div>
           <div>
-            <p className="font-display text-xl font-semibold leading-none">KrushiMitra</p>
+            <p className="font-display text-xl font-semibold leading-none">{t('landing.title')}</p>
             <p className="mt-1 text-[11px] uppercase tracking-[0.2em] text-sidebar-foreground/60">
-              Smart Farming
+              {t('appshell.smartFarming')}
             </p>
           </div>
         </div>
 
         <nav className="px-4 py-2">
-          {nav.map((item) => {
-            const active = pathname === item.to || (item.to !== "/dashboard" && pathname.startsWith(item.to));
+          {navItems.map((item) => {
+            const active =
+              pathname === item.to || (item.to !== "/dashboard" && pathname.startsWith(item.to));
             const Icon = item.icon;
             return (
               <Link
@@ -64,7 +72,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 }`}
               >
                 <Icon className="h-5 w-5" strokeWidth={2} />
-                {item.label}
+                {t(item.labelKey)}
               </Link>
             );
           })}
@@ -74,9 +82,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <div className="mb-2 flex h-9 w-9 items-center justify-center rounded-xl bg-lime text-lime-foreground">
             <Sprout className="h-4 w-4" />
           </div>
-          <p className="font-display text-base font-semibold">Pro tips</p>
+          <p className="font-display text-base font-semibold">{t('appshell.proTips')}</p>
           <p className="mt-1 text-xs leading-relaxed text-sidebar-foreground/70">
-            Test your soil every 4 weeks for the most accurate recommendations.
+            {t('appshell.tipText')}
           </p>
         </div>
       </aside>
@@ -101,34 +109,35 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </button>
               <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Today</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">{t('appshell.today')}</p>
                 <h1 className="font-display text-2xl font-semibold text-foreground">{current}</h1>
               </div>
             </div>
 
+            
             <div className="flex items-center gap-3">
-              <div className="hidden items-center gap-2 rounded-full border border-border bg-card px-4 py-2.5 text-sm text-muted-foreground shadow-soft md:flex">
-                <Search className="h-4 w-4" />
-                <input
-                  className="w-56 bg-transparent outline-none placeholder:text-muted-foreground"
-                  placeholder="Search crops, pests, fields…"
-                />
-              </div>
-              <button className="relative flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-soft transition hover:bg-accent">
-                <Bell className="h-5 w-5" />
-                <span className="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-bad" />
-              </button>
-              <div className="flex items-center gap-3 rounded-full border border-border bg-card py-1.5 pl-1.5 pr-4 shadow-soft">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-leaf text-sm font-semibold text-primary-foreground">
-                  RK
-                </div>
-                <div className="hidden text-left sm:block">
-                  <p className="text-sm font-semibold leading-tight text-foreground">Ravi Kumar</p>
-                  <p className="text-xs leading-tight text-muted-foreground">Nashik farm</p>
-                </div>
-              </div>
-            </div>
-          </div>
+  <div className="hidden text-left sm:block">
+    <p className="text-sm font-semibold leading-tight text-foreground">
+      {user?.name || t('appshell.guestUser')}
+    </p>
+    <p className="text-xs leading-tight text-muted-foreground">
+      {user?.farm || t('appshell.noFarmSelected')}
+    </p>
+  </div>
+
+  <LanguageSwitcher />
+
+  <button
+    onClick={() => {
+      logoutUser();
+      window.location.href = "/signin";
+    }}
+    className="rounded-lg bg-red-500 px-3 py-2 text-xs text-white hover:bg-red-600"
+  >
+    {t('nav.logout')}
+  </button>
+</div>
+</div>
         </header>
 
         <main className="px-5 py-8 sm:px-8 sm:py-10">{children}</main>

@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WeatherRouteImport } from './routes/weather'
 import { Route as SoilRouteImport } from './routes/soil'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as SigninRouteImport } from './routes/signin'
 import { Route as PestRouteImport } from './routes/pest'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as DashboardRouteImport } from './routes/dashboard'
@@ -25,6 +27,16 @@ const WeatherRoute = WeatherRouteImport.update({
 const SoilRoute = SoilRouteImport.update({
   id: '/soil',
   path: '/soil',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SigninRoute = SigninRouteImport.update({
+  id: '/signin',
+  path: '/signin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PestRoute = PestRouteImport.update({
@@ -59,6 +71,8 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/history': typeof HistoryRoute
   '/pest': typeof PestRoute
+  '/signin': typeof SigninRoute
+  '/signup': typeof SignupRoute
   '/soil': typeof SoilRoute
   '/weather': typeof WeatherRoute
 }
@@ -68,6 +82,8 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/history': typeof HistoryRoute
   '/pest': typeof PestRoute
+  '/signin': typeof SigninRoute
+  '/signup': typeof SignupRoute
   '/soil': typeof SoilRoute
   '/weather': typeof WeatherRoute
 }
@@ -78,6 +94,8 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/history': typeof HistoryRoute
   '/pest': typeof PestRoute
+  '/signin': typeof SigninRoute
+  '/signup': typeof SignupRoute
   '/soil': typeof SoilRoute
   '/weather': typeof WeatherRoute
 }
@@ -89,6 +107,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/history'
     | '/pest'
+    | '/signin'
+    | '/signup'
     | '/soil'
     | '/weather'
   fileRoutesByTo: FileRoutesByTo
@@ -98,6 +118,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/history'
     | '/pest'
+    | '/signin'
+    | '/signup'
     | '/soil'
     | '/weather'
   id:
@@ -107,6 +129,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/history'
     | '/pest'
+    | '/signin'
+    | '/signup'
     | '/soil'
     | '/weather'
   fileRoutesById: FileRoutesById
@@ -117,6 +141,8 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   HistoryRoute: typeof HistoryRoute
   PestRoute: typeof PestRoute
+  SigninRoute: typeof SigninRoute
+  SignupRoute: typeof SignupRoute
   SoilRoute: typeof SoilRoute
   WeatherRoute: typeof WeatherRoute
 }
@@ -135,6 +161,20 @@ declare module '@tanstack/react-router' {
       path: '/soil'
       fullPath: '/soil'
       preLoaderRoute: typeof SoilRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signin': {
+      id: '/signin'
+      path: '/signin'
+      fullPath: '/signin'
+      preLoaderRoute: typeof SigninRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pest': {
@@ -181,6 +221,8 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   HistoryRoute: HistoryRoute,
   PestRoute: PestRoute,
+  SigninRoute: SigninRoute,
+  SignupRoute: SignupRoute,
   SoilRoute: SoilRoute,
   WeatherRoute: WeatherRoute,
 }
