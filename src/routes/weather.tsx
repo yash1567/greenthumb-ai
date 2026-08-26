@@ -26,13 +26,14 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { fetchCurrentWeather, fetchForecast } from "@/lib/weatherApi";
+import { API_BASE_URL } from "@/lib/api";
 
 export const Route = createFileRoute("/weather")({
   component: WeatherPage,
 });
 
 export const API = {
-  BASE_URL: "https://your-backend-url.com",
+  BASE_URL: API_BASE_URL,
 };
 const WEATHER_CACHE_KEY = "krushi-weather-cache";
 const PERMISSION_KEY = "krushi-weather-permission";

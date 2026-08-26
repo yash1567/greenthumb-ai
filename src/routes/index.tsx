@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "../components/LanguageSwitcher";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Using the generated dark waves background
-import bgImg from "@/assets/dark_waves_bg.png";
+// Using background image asset
+import bgImg from "@/assets/auth-bg.jpg";
 
 export const Route = createFileRoute("/")({
   component: ExactAuthPortal,
